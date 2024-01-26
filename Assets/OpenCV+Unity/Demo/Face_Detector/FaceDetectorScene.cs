@@ -4,22 +4,36 @@
 	using UnityEngine;
 	using System.Collections.Generic;
 	using UnityEngine.UI;
-	using OpenCvSharp;
+    using OpenCvSharp;
+    using System.Drawing;
 
-	public class FaceDetectorScene : WebCamera
-	{
-		public TextAsset faces;
+    public class FaceDetectorScene : WebCamera
+    {
+		public Renderer _renderer;
+        public TextAsset faces;
 		public TextAsset eyes;
 		public TextAsset shapes;
 
 		private FaceProcessorLive<WebCamTexture> processor;
+
+		public List<GameObject> points;
 
 		/// <summary>
 		/// Default initializer for MonoBehavior sub-classes
 		/// </summary>
 		protected override void Awake()
 		{
-			base.Awake();
+			points = new List<GameObject>();
+
+			for (int i = 0; i < 69; i++)
+			{
+				GameObject point = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                point.transform.localScale = new Vector3(10f, 10f, 10f);
+
+				points.Add(point);
+            }
+
+            base.Awake();
 			base.forceFrontalCamera = true; // we work with frontal cams here, let's force it for macOS s MacBook doesn't state frontal cam correctly
 
 			byte[] shapeDat = shapes.bytes;
@@ -64,10 +78,25 @@
 			// mark detected objects
 			processor.MarkDetected();
 
-			// processor.Image now holds data we'd like to visualize
-			output = Unity.MatToTexture(processor.Image, output);   // if output is valid texture it's buffer will be re-used, otherwise it will be re-created
+			processor.Faces.ForEach(face =>
+			{
+				RenderPoint(face);
+            });
 
-			return true;
-		}
-	}
+            // processor.Image now holds data we'd like to visualize
+            output = Unity.MatToTexture(processor.Image, output);   // if output is valid texture it's buffer will be re-used, otherwise it will be re-created
+
+            return true;
+        }
+
+        void RenderPoint(DetectedFace face)
+        {
+			for (int i = 0; i < face.Marks.Length; i++)
+			{
+				if (i < points.Count)
+					points[i].transform.position = new Vector3(face.Marks[i].X, face.Marks[i].Y, 0.0f);
+			}
+        }
+    }
+
 }

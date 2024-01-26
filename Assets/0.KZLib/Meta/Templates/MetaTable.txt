@@ -1,0 +1,72 @@
+using KZLib;
+using KZLib.KZAttribute;
+using KZLib.KZFiles;
+using Sirenix.OdinInspector;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+namespace MetaData
+{
+	#region $ClassName Data
+	[Serializable]
+	public class $ClassNameData : IMetaData
+	{
+		#region Field
+		$MemberFields
+		[SerializeField,HideInInspector] private bool m_Exist;
+		#endregion Field
+
+		#region Property
+		[BoxGroup("정보")]
+		$MemberProperties
+		[HorizontalGroup("정보/0"),LabelText("IsExist"),LabelWidth(100),ShowInInspector,KZIsValid("오류 없음","오류 있음")]
+		public bool IsExist => m_Exist;
+		#endregion Property
+
+		#region Initialize
+		public $ClassNameData() { }
+
+#if UNITY_EDITOR
+		public $ClassNameData Initialize()
+		{
+			m_Exist = true;
+
+			return this;
+		}
+#endif
+		#endregion Initialize
+	}
+	#endregion $ClassName Data
+
+	public class $ClassNameTable : MetaDataTable
+	{
+		[InfoBox("$m_ErrorMessage",InfoMessageType.Error,"$IsShowErrorMessage")]
+		[BoxGroup("테이블",ShowLabel = false,Order = TABLE_ORDER)]
+		[VerticalGroup("테이블/데이터",Order = 0),LabelText("데이터 리스트"),ListDrawerSettings(ShowFoldout = false,IsReadOnly = true),SerializeField,Searchable]
+		private List<$ClassNameData> m_$ClassNameList = null;
+		public override IEnumerator<IMetaData> DataGroup => m_$ClassNameList.GetEnumerator();
+
+#if UNITY_EDITOR
+		protected override string TableName => "$SheetName";
+
+		public override void OnRefresh()
+		{
+			m_$ClassNameList.Clear();
+
+			var file = new ExcelFile(CurrentPath);
+			var dataList = new List<$ClassNameData>();
+
+			foreach(var data in file.Deserialize<$ClassNameData>(TableName))
+			{
+				dataList.Add(data.Initialize());
+			}
+
+			m_$ClassNameList.AddRange(dataList.OrderBy(x=>x.MetaId));
+
+			base.OnRefresh();
+		}
+#endif
+	}
+}

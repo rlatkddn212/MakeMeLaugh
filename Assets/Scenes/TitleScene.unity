@@ -161,9 +161,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 592049780474585340, guid: 40f47bd42ddcef74d959e95d9d8ac7f6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1280236439754327047, guid: 40f47bd42ddcef74d959e95d9d8ac7f6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4062728894881264297, guid: 40f47bd42ddcef74d959e95d9d8ac7f6, type: 3}
       propertyPath: m_Name
       value: GameObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 4080559353687627957, guid: 40f47bd42ddcef74d959e95d9d8ac7f6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5300928748400299216, guid: 40f47bd42ddcef74d959e95d9d8ac7f6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6186664858050764909, guid: 40f47bd42ddcef74d959e95d9d8ac7f6, type: 3}
       propertyPath: m_RootOrder

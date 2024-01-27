@@ -84,7 +84,7 @@ public class InGameMgr : SingletonMB<InGameMgr>
 		});
 
 		m_MicrophoneRecord.OnRecordStop += OnRecordStop;
-		m_MicrophoneRecord.OnGetAudioClip += OnGetAudioClip;
+		//m_MicrophoneRecord.OnGetAudioClip += OnGetAudioClip;
 
 		m_MicrophoneRecord.SelectedMicDevice = m_ConfigData.MicDevice;
 		m_MicrophoneRecord.maxLengthSec = m_ConfigData.RecordDuration;

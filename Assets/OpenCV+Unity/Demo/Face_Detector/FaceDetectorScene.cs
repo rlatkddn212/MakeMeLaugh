@@ -1,14 +1,12 @@
 ﻿namespace OpenCvSharp.Demo
 {
-	using System;
 	using UnityEngine;
 	using System.Collections.Generic;
-	using UnityEngine.UI;
-	using OpenCvSharp;
 
-	public class FaceDetectorScene : WebCamera
-	{
-		public TextAsset faces;
+    public class FaceDetectorScene : WebCamera
+    {
+		public Renderer _renderer;
+        public TextAsset faces;
 		public TextAsset eyes;
 		public TextAsset shapes;
 
@@ -19,7 +17,7 @@
 		/// </summary>
 		protected override void Awake()
 		{
-			base.Awake();
+            base.Awake();
 			base.forceFrontalCamera = true; // we work with frontal cams here, let's force it for macOS s MacBook doesn't state frontal cam correctly
 
 			byte[] shapeDat = shapes.bytes;
@@ -64,10 +62,67 @@
 			// mark detected objects
 			processor.MarkDetected();
 
-			// processor.Image now holds data we'd like to visualize
-			output = Unity.MatToTexture(processor.Image, output);   // if output is valid texture it's buffer will be re-used, otherwise it will be re-created
+			processor.Faces.ForEach(face =>
+			{
+                GenerateTexture(face);
+            });
 
-			return true;
-		}
-	}
+            return true;
+        }
+
+        void GenerateTexture(DetectedFace face)
+        {
+			int minMarkX = 1000;
+			int maxMarkX = 0;
+			int minMarkY = 1000;
+			int maxMarkY = 0;
+            if (face.Marks.Length == 0) return;
+            for (int i = 0; i < face.Marks.Length; i++)
+			{
+				if (face.Marks[i].X < minMarkX) minMarkX = face.Marks[i].X;
+				if (face.Marks[i].X > maxMarkX) maxMarkX = face.Marks[i].X;
+				if (face.Marks[i].Y < minMarkY) minMarkY = face.Marks[i].Y;
+				if (face.Marks[i].Y > maxMarkY) maxMarkY = face.Marks[i].Y;
+			}
+			int width = maxMarkX - minMarkX;
+			int height = maxMarkY - minMarkY;
+			Texture2D texture = new Texture2D(128, 128);
+            for (int x = 0; x < 128; x++)
+            {
+                for (int y = 0; y < 128; y++)
+                {
+                    texture.SetPixel(x, y, new UnityEngine.Color(1.0f, 1.0f, 1.0f, 0.0f)); // Optional: Set a default color for the entire texture
+                }
+            }
+
+			// Set pixels at specific points
+			for (int i = 0; i < face.Marks.Length; i++)
+			{
+                int x = (int)(((float)(face.Marks[i].X - minMarkX) / width) * 100) + 14;
+				int y = 114 - (int)(((float)(face.Marks[i].Y - minMarkY) / height) * 100);
+				SetPoints(texture, x, y);
+			}
+
+            texture.Apply();
+            _renderer.material.mainTexture = texture;
+        }
+
+        void SetPoints(Texture2D texture, int x, int y)
+        {
+			int pointSize = 4;
+            for (int i = -pointSize / 2; i <= pointSize / 2; i++)
+            {
+                for (int j = -pointSize / 2; j <= pointSize / 2; j++)
+                {
+                    int pixelX = x + i;
+                    int pixelY = y + j;
+
+                    if (pixelX >= 0 && pixelX < texture.width && pixelY >= 0 && pixelY < texture.height)
+                    {
+                        texture.SetPixel(pixelX, pixelY, UnityEngine.Color.green);
+                    }
+                }
+            }
+        }
+    }
 }

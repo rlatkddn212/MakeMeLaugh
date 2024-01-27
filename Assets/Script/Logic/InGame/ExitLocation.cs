@@ -12,10 +12,14 @@ public class ExitLocation : MonoBehaviour
     [SerializeField]
     private AudioSource _audio;
 
+    private bool m_enter = false;
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !m_enter)
         {
+            m_enter = true;
+
             Debug.Log("Exit");
 
             loopAudio.Stop();

@@ -7,16 +7,16 @@ using UnityEngine.UI;
 
 public class ExitLocation : MonoBehaviour
 {
+    [SerializeField]
+    private AudioSource _audio;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Exit"); 
-
-
+            Debug.Log("Exit");
+            _audio.Play();
 
             UIMgr.In.PlayWebCamAsync().Forget();
-            
         }
     }
 }

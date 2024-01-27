@@ -33,6 +33,8 @@ public class Player : MonoBehaviour
 
 	protected Vector3 velocity;
 
+	private Tween m_Tween = null;
+
 
 	protected virtual void Start()
 	{
@@ -50,7 +52,8 @@ public class Player : MonoBehaviour
 
 		m_Light.color = Color.white;
 
-		transform.DOKill();
+		m_Tween = transform.DOShakePosition(20.0f,new Vector3(0.0f,2.0f,0.0f));
+		m_Tween.Pause();
 	}
 
 	protected virtual void Update()
@@ -106,7 +109,9 @@ public class Player : MonoBehaviour
 
 	public async UniTask DiePlayerAsync()
     {
-		transform.DOShakePosition(20.0f,new Vector3(0.0f,1.0f,0.0f));
+		movementController.enabled = false;
+		m_Rigidbody.isKinematic = true;
+		m_Tween.Restart();
 
         await UniTaskTools.ExecuteOverTimeAsync(0.0f,1.0f,1.0f,(progress)=>
         {
@@ -118,6 +123,6 @@ public class Player : MonoBehaviour
             m_Light.color = Color.Lerp(Color.red,new Color(1.0f,0.0f,0.0f,0.0f),progress);
         });
 
-		transform.DOKill();
+		m_Tween.Pause();
     }
 }

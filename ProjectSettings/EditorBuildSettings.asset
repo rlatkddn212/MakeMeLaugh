@@ -11,10 +11,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameScene.unity
     guid: 662bf1397b2374e2893162b710763e69
-  - enabled: 1
-    path: Assets/OpenCV+Unity/Demo/Lobby/LobbyScene.unity
-    guid: dbcacb8eff72f5b43af892254d87eda7
-  - enabled: 1
-    path: Assets/OpenCV+Unity/Demo/LiveSketch_WebCam/LiveSketchScene.unity
-    guid: a5a11ab1373713a42b4b17072ee63929
   m_configObjects: {}

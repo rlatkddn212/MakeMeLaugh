@@ -230,7 +230,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbbc9d29c71e745bba80c7e53041256e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _renderer: {fileID: 0}
+  _materials:
+  - {fileID: 2100000, guid: 4ef944738df6cd34285471b45a6884a5, type: 2}
+  - {fileID: 2100000, guid: a28a2c1d23542724c883151442a253cd, type: 2}
+  - {fileID: 2100000, guid: a633077d6674d2745b99232ab62e8b56, type: 2}
+  - {fileID: 2100000, guid: 46f143af1b5ce8b48aba7b2421ede534, type: 2}
+  - {fileID: 2100000, guid: d971d53836cf1574e9d54db66a53c53e, type: 2}
+  _renderer: {fileID: 7125529052157858629}
   m_AudioSource: {fileID: 1402462047163465858}
 --- !u!65 &4056374889010526949
 BoxCollider:
@@ -417,5 +423,10 @@ PrefabInstance:
 --- !u!4 &7125529052153070181 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 7aea2d469d67de44f9dd680a5088c739, type: 3}
+  m_PrefabInstance: {fileID: 7125529052152682725}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &7125529052157858629 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 13700000, guid: 7aea2d469d67de44f9dd680a5088c739, type: 3}
   m_PrefabInstance: {fileID: 7125529052152682725}
   m_PrefabAsset: {fileID: 0}

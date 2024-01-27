@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -5,6 +6,12 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+	[SerializeField]
+	private List<Material> _materials;
+
+	[SerializeField]
+	private Renderer _renderer;
+
     [SerializeField]
 	private AudioSource m_AudioSource = null;
 	private float m_SoundInterval = 3.0f;
@@ -28,8 +35,17 @@ public class Enemy : MonoBehaviour
     }
 
 	public void Initialize(Transform _transform)
-	{
-		rb.velocity = Vector3.zero;
+    {
+		// 랜덤으로 머터리얼 가져오기
+		Material material = _materials.GetRndValue();
+
+        if (_renderer != null && material != null)
+        {
+            // 머터리얼 교체
+            _renderer.material = material;
+        }
+
+        rb.velocity = Vector3.zero;
 		transform.DOKill();
 
 		transform.ResetTransform(_transform);

@@ -16,6 +16,9 @@ public class InGameMgr : SingletonMB<InGameMgr>
 	[SerializeField]
 	private int m_Count = 0;
 
+	[SerializeField]
+	private ExitLocation m_ExitLocation;
+
 	public bool IsStart => m_StartGame;
 
 	[ShowInInspector]
@@ -43,7 +46,9 @@ public class InGameMgr : SingletonMB<InGameMgr>
 	{
 		base.Initialize();
 
-		m_StartGame = false;
+		// 출구 제거
+        m_ExitLocation.gameObject.SetActive(false);
+        m_StartGame = false;
 		m_Count = 0;
 
 		var configPath = FileTools.PathCombine(FileTools.GetProjectPath(),"ConfigData.json");
@@ -96,7 +101,7 @@ public class InGameMgr : SingletonMB<InGameMgr>
 		{
 			if(Input.GetKeyDown(KeyCode.Return))
 			{
-				m_StartGame = true;
+                m_StartGame = true;
 				UIMgr.In.GameStart();
 				EnemyMgr.In.SpawnEnemy();
 			}
@@ -162,9 +167,9 @@ public class InGameMgr : SingletonMB<InGameMgr>
 			{
 				// 탈출 포탈 생성
 				Log.InGame.I("게임 승리");
-
-				// EndGameAsync();
-			}
+                m_ExitLocation.gameObject.SetActive(true);
+                // EndGameAsync();
+            }
 			else
 			{
 				await UniTask.WaitForSeconds(2.0f);

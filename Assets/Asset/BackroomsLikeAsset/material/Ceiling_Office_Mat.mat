@@ -63,6 +63,7 @@ Material:
     - _AO: 0
     - _AlphaClip: 1
     - _AlphaClipping: 0
+    - _AlphaToMask: 1
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _CastShadows: 1
@@ -85,8 +86,8 @@ Material:
     m_Colors:
     - _Blue_Area_Color: {r: 1, g: 1, b: 1, a: 0}
     - _ColorOverlay: {r: 1, g: 1, b: 1, a: 0}
-    - _Emission_Color: {r: 6.0235295, g: 6.0235295, b: 6.0235295, a: 0}
-    - _Green_Area_Color: {r: 1, g: 1, b: 1, a: 0}
+    - _Emission_Color: {r: 9.082412, g: 9.082412, b: 9.082412, a: 0}
+    - _Green_Area_Color: {r: 0, g: 1, b: 0.13624477, a: 0}
     - _Red_Area_Color: {r: 1, g: 1, b: 1, a: 0}
     - _UV_Tiling: {r: 1, g: 1, b: 0, a: 0}
     - _White_Area_Color: {r: 0, g: 0, b: 0, a: 0}
@@ -103,4 +104,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 6
+  version: 7

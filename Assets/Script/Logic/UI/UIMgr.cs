@@ -13,14 +13,16 @@ public class UIMgr : SingletonMB<UIMgr>
     private GameObject m_OptionUI = null;
 
     [SerializeField]
+    private RawImage m_CamScreenUI = null;
+    [SerializeField]
     private RawImage m_FadeScreenUI = null;
 
     private WebCamTexture m_WebcamTexture = null;
 
     protected override void Initialize()
     {
-        m_FadeScreenUI.color = Color.clear;
-
+        m_FadeScreenUI.gameObject.SetActiveSelf(false);
+        m_CamScreenUI.gameObject.SetActiveSelf(false);
         m_InGameUI.SetActiveSelf(true);
         m_OptionUI.SetActiveSelf(false);
 
@@ -39,28 +41,45 @@ public class UIMgr : SingletonMB<UIMgr>
 
     public async UniTask FadeOutAsync()
     {
+        m_CamScreenUI.gameObject.SetActiveSelf(false);
+        m_FadeScreenUI.gameObject.SetActiveSelf(true);
+
         m_FadeScreenUI.color = Color.clear;
 
         await UniTaskTools.ExecuteOverTimeAsync(0.0f,1.0f,1.0f,(progress)=>
         {
-            m_FadeScreenUI.color = Color.Lerp(Color.clear,Color.black,progress);
+            if(m_FadeScreenUI != null)
+            {
+                m_FadeScreenUI.color = Color.Lerp(Color.clear,Color.black,progress);
+            }
         });
     }
 
     public async UniTask PlayWebCamAsync()
     {
+        m_FadeScreenUI.gameObject.SetActiveSelf(false);
+        m_CamScreenUI.gameObject.SetActiveSelf(true);
+
         m_WebcamTexture = new WebCamTexture();
 
-        m_FadeScreenUI.color = Color.white;
-
-        m_FadeScreenUI.texture = m_WebcamTexture;
+        m_CamScreenUI.color = Color.white;
+        m_CamScreenUI.texture = m_WebcamTexture;
         m_WebcamTexture.Play();
 
-        await UniTask.WaitForSeconds(3.0f);
+        await UniTask.WaitForSeconds(5.0f);
+
+        InGameMgr.In.PlayAllSound();
+
+        m_FadeScreenUI.gameObject.SetActiveSelf(true);
+        m_CamScreenUI.gameObject.SetActiveSelf(false);
+        m_FadeScreenUI.color = Color.clear;
 
         await UniTaskTools.ExecuteOverTimeAsync(0.0f,1.0f,1.0f,(progress)=>
         {
-            m_FadeScreenUI.color = Color.Lerp(Color.clear,Color.black,progress);
+            if(m_FadeScreenUI != null)
+            {
+                m_FadeScreenUI.color = Color.Lerp(Color.clear,Color.black,progress);
+            }
         });
 
         SceneManager.LoadScene("TitleScene");

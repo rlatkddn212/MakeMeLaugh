@@ -6,7 +6,7 @@ public record ConfigData
 	public float PlayerSensitivity { get; set; } = 5.0f;
 	public float EnemySoundInterval { get; set; } = 3.0f;
 
-	public int EndingCount { get; set; } = 1;
+	public int EndingCount { get; set; } = 3;
 
 	public string MicDevice { get; set; } = "Default microphone";
 }

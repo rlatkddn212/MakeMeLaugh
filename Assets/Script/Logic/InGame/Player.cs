@@ -106,7 +106,7 @@ public class Player : MonoBehaviour
 
 	public async UniTask DiePlayerAsync()
     {
-		transform.DOShakePosition(30.0f,new Vector3(0.0f,1.0f,0.0f));
+		transform.DOShakePosition(20.0f,new Vector3(0.0f,1.0f,0.0f));
 
         await UniTaskTools.ExecuteOverTimeAsync(0.0f,1.0f,1.0f,(progress)=>
         {
@@ -117,5 +117,7 @@ public class Player : MonoBehaviour
         {
             m_Light.color = Color.Lerp(Color.red,new Color(1.0f,0.0f,0.0f,0.0f),progress);
         });
+
+		transform.DOKill();
     }
 }

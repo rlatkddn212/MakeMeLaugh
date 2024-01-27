@@ -1,8 +1,11 @@
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -32,6 +35,8 @@ public class InGameMgr : SingletonMB<InGameMgr>
 
 	private CancellationTokenSource m_CancelTokenSource = null;
 
+	public readonly List<AudioClip> m_AudioClipList = new();
+
 	public float PlayerSpeed => m_ConfigData == null ? 10.0f : m_ConfigData.PlayerSpeed;
 	public float PlayerSensitivity => m_ConfigData == null ? 1.0f : m_ConfigData.PlayerSensitivity;
 
@@ -40,6 +45,8 @@ public class InGameMgr : SingletonMB<InGameMgr>
 	protected override void Initialize()
 	{
 		base.Initialize();
+
+		m_AudioClipList.Clear();
 
 		// 출구 제거
         m_ExitLocation.gameObject.SetActive(false);
@@ -77,6 +84,7 @@ public class InGameMgr : SingletonMB<InGameMgr>
 		});
 
 		m_MicrophoneRecord.OnRecordStop += OnRecordStop;
+		m_MicrophoneRecord.OnGetAudioClip += OnGetAudioClip;
 
 		m_MicrophoneRecord.SelectedMicDevice = m_ConfigData.MicDevice;
 		m_MicrophoneRecord.maxLengthSec = m_ConfigData.RecordDuration;
@@ -126,16 +134,33 @@ public class InGameMgr : SingletonMB<InGameMgr>
 		Log.InGame.I("End");
 	}
 
+	private void OnGetAudioClip(AudioClip _clip)
+	{
+		// var folderPath = FileTools.PathCombine(FileTools.GetProjectPath(),"Sound");
+
+		// FileTools.CreateFolder(folderPath);
+
+		// var filepathArray = Directory.GetFiles(folderPath);
+		// var musicPath = FileTools.PathCombine(FileTools.GetProjectPath(),string.Format("Sound/laugh_{0}.wav",filepathArray.Length));
+
+		m_AudioClipList.Add(ObjectTools.CopyObject(_clip));
+
+		// musicPath;
+
+		// var data
+
+		// FileTools.WriteAudioClipToWAV(_clip);
+	}
+
 	private async void OnRecordStop(AudioChunk _recorded)
 	{
+		var clip = m_MicrophoneRecord.ClipSamples;
+
 		var result = await VoiceMgr.In.GetTextAsync(_recorded.Data,_recorded.Frequency,_recorded.Channels);
 		var text = result.Result.ToLower();
 
 		// 결과 판단하기
-
-		// if((text.Contains('[') || text.Contains('(') || text.Contains('*')) && text.Contains("laugh"))
-		// if(text.Contains("laugh"))
-		if (true)
+		if(text.Contains("laugh") || text.Contains("lol"))
 		{
 			UIMgr.In.SetGameText("");
 
@@ -169,6 +194,14 @@ public class InGameMgr : SingletonMB<InGameMgr>
 			await EndGameAsync();
 
         }
+	}
+
+	public void PlayAllSound()
+	{
+		foreach(var clip in new List<AudioClip>(m_AudioClipList))
+		{
+			PlayAudioAndDestroy.Play(clip,transform.position);
+		}
 	}
 
 	public async UniTask EndGameAsync()

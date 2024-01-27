@@ -105,7 +105,7 @@ public class InGameMgr : SingletonMB<InGameMgr>
 			return;
 		}
 
-		UIMgr.In.SetGameText("");
+		UIMgr.In.SetGameText("날 좀 웃겨봐");
 
 		m_CancelTokenSource?.Dispose();
 		m_CancelTokenSource = new();

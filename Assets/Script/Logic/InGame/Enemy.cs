@@ -1,15 +1,10 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using KZLib;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-	// 적 얼굴 랜더러
-	[SerializeField]
-    private Renderer _renderer;
-
     [SerializeField]
 	private AudioSource m_AudioSource = null;
 	private float m_SoundInterval = 3.0f;
@@ -29,7 +24,6 @@ public class Enemy : MonoBehaviour
             rb = gameObject.AddComponent<Rigidbody>();
         }
 
-        FaceMgr.In.OnFaceDetected += OnFaceRender;
         m_SoundInterval = InGameMgr.In.EnemySoundInterval;
     }
 
@@ -89,9 +83,4 @@ public class Enemy : MonoBehaviour
         obj.transform.position = transform.position;
         await UniTask.WaitForSeconds(1.0f);
 	}
-
-	public void OnFaceRender(Texture2D _texture)
-	{
-        _renderer.material.mainTexture = _texture;
-    }
 }

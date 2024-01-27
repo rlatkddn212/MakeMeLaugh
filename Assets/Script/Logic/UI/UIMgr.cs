@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIMgr : SingletonMB<UIMgr>
@@ -15,7 +13,9 @@ public class UIMgr : SingletonMB<UIMgr>
     private GameObject m_OptionUI = null;
 
     [SerializeField]
-    private Image m_FadeScreenUI = null;
+    private RawImage m_FadeScreenUI = null;
+
+    private WebCamTexture m_WebcamTexture = null;
 
     protected override void Initialize()
     {
@@ -45,5 +45,24 @@ public class UIMgr : SingletonMB<UIMgr>
         {
             m_FadeScreenUI.color = Color.Lerp(Color.clear,Color.black,progress);
         });
+    }
+
+    public async UniTask PlayWebCamAsync()
+    {
+        m_WebcamTexture = new WebCamTexture();
+
+        m_FadeScreenUI.color = Color.white;
+
+        m_FadeScreenUI.texture = m_WebcamTexture;
+        m_WebcamTexture.Play();
+
+        await UniTask.WaitForSeconds(3.0f);
+
+        await UniTaskTools.ExecuteOverTimeAsync(0.0f,1.0f,1.0f,(progress)=>
+        {
+            m_FadeScreenUI.color = Color.Lerp(Color.clear,Color.black,progress);
+        });
+
+        SceneManager.LoadScene("TitleScene");
     }
 }

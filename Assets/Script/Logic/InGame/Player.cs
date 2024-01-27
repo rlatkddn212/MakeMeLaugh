@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Light m_Light = null;
     [SerializeField]
+    private Transform m_Camera = null;
+    [SerializeField]
     private Rigidbody m_Rigidbody = null;
 
 	public float MinYaw = -360;
@@ -72,14 +74,14 @@ public class Player : MonoBehaviour
 
 		direction.Normalize();
 
-		// if (movementController.isGrounded)
-		// {
-		// 	velocity = Vector3.zero;
-		// }
-		// else
-		// {
-		// 	velocity += 9.81f * 10 * Time.deltaTime * -transform.up; // Gravity
-		// }
+		if(movementController.isGrounded)
+		{
+			velocity = Vector3.zero;
+		}
+		else
+		{
+			velocity += 9.81f * 10 * Time.deltaTime * -transform.up; // Gravity
+		}
 
 		direction += velocity * Time.deltaTime;
 		movementController.Move(MoveSpeed * Time.deltaTime * direction);

@@ -25,7 +25,7 @@ public class EnemyMgr : SingletonMB<EnemyMgr>
 	{
 		base.Initialize();
 
-        m_ObjectPool = new GameObjectPool(m_Pivot.gameObject, m_Storage, 5);
+        m_ObjectPool = new GameObjectPool(m_Pivot.gameObject,m_Storage,3);
 
         m_PositionList.Randomize();
 	}
@@ -53,8 +53,8 @@ public class EnemyMgr : SingletonMB<EnemyMgr>
 		var data = dataList.GetRndValue();
 
 		m_NowEnemy = m_ObjectPool.Get<Enemy>(transform);
-        Debug.Log("적군 생성");
-        m_NowEnemy.Initialize(data.position);
+
+        m_NowEnemy.Initialize(data);
 
 		m_index = dataList.IndexOf(data);
 	}

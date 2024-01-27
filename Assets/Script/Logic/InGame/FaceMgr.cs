@@ -11,13 +11,4 @@ public class FaceMgr : SingletonMB<FaceMgr>
     // Face Detected Event
     [HideInInspector]
     public FaceDetectedHandler OnFaceDetected;
-
-    protected override void Initialize()
-    {
-    }
-
-    public void StopDetect()
-    {
-        Destroy(faceDetector.gameObject);
-    }
 }

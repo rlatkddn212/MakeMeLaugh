@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
@@ -57,7 +55,7 @@ public class Player : MonoBehaviour
 
 	protected virtual void Update()
 	{
-		if(!InGameMgr.In.IsStart || m_Die)
+		if(m_Die)
 		{
 			return;
 		}
@@ -88,10 +86,10 @@ public class Player : MonoBehaviour
 
 		// Camera Look
 		yaw += Input.GetAxisRaw("Mouse X") * LookSensitivity;
-		pitch -= Input.GetAxisRaw("Mouse Y") * LookSensitivity;
+		// pitch -= Input.GetAxisRaw("Mouse Y") * LookSensitivity;
 
 		yaw = ClampAngle(yaw, MinYaw, MaxYaw);
-		pitch = ClampAngle(pitch, MinPitch, MaxPitch);
+		// pitch = ClampAngle(pitch, MinPitch, MaxPitch);
 
 		transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
 	}

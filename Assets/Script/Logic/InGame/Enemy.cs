@@ -33,11 +33,12 @@ public class Enemy : MonoBehaviour
         m_SoundInterval = InGameMgr.In.EnemySoundInterval;
     }
 
-	public void Initialize(Vector3 _position)
+	public void Initialize(Transform _transform)
 	{
 		rb.velocity = Vector3.zero;
 		transform.DOKill();
-		transform.position = _position;
+
+		transform.ResetTransform(_transform);
 
 		m_Meet = false;
 

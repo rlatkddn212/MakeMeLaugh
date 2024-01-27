@@ -10,7 +10,7 @@ public class TitleScene : MonoBehaviour
     AsyncOperation asyncOperation;
     private IEnumerator Start()
     {
-        asyncOperation = SceneManager.LoadSceneAsync("GameScene 1");
+        asyncOperation = SceneManager.LoadSceneAsync("GameScene");
         asyncOperation.allowSceneActivation = false;
         while (!asyncOperation.isDone)
         {

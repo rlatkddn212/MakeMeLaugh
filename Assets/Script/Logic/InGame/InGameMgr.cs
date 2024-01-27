@@ -11,15 +11,10 @@ using Whisper.Utils;
 public class InGameMgr : SingletonMB<InGameMgr>
 {
 	[SerializeField]
-	private bool m_StartGame = false;
-
-	[SerializeField]
 	private int m_Count = 0;
 
 	[SerializeField]
 	private ExitLocation m_ExitLocation;
-
-	public bool IsStart => m_StartGame;
 
 	[ShowInInspector]
 	private bool IsRecording => m_MicrophoneRecord != null && m_MicrophoneRecord.IsRecording;
@@ -48,7 +43,7 @@ public class InGameMgr : SingletonMB<InGameMgr>
 
 		// 출구 제거
         m_ExitLocation.gameObject.SetActive(false);
-        m_StartGame = false;
+		EnemyMgr.In.SpawnEnemy();
 		m_Count = 0;
 
 		var configPath = FileTools.PathCombine(FileTools.GetProjectPath(),"ConfigData.json");
@@ -97,18 +92,6 @@ public class InGameMgr : SingletonMB<InGameMgr>
 
 	private void Update()
 	{
-		if(!m_StartGame)
-		{
-			if(Input.GetKeyDown(KeyCode.Return))
-			{
-                m_StartGame = true;
-				UIMgr.In.GameStart();
-				EnemyMgr.In.SpawnEnemy();
-			}
-
-			return;
-		}
-
 		if(Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.Y) && Input.GetKeyDown(KeyCode.M))
 		{
 			UIMgr.In.ToggleOptionPanel();
@@ -122,7 +105,7 @@ public class InGameMgr : SingletonMB<InGameMgr>
 			return;
 		}
 
-		UIMgr.In.SetGameText("!!!");
+		UIMgr.In.SetGameText("");
 
 		m_CancelTokenSource?.Dispose();
 		m_CancelTokenSource = new();
@@ -154,14 +137,12 @@ public class InGameMgr : SingletonMB<InGameMgr>
 		// if(text.Contains("laugh"))
 		if (true)
 		{
-			UIMgr.In.SetGameText("으악 주금");
+			UIMgr.In.SetGameText("");
 
 			// 적군 죽음
 			await EnemyMgr.In.KillEnemyAsync();
 
 			m_Count++;
-
-			UIMgr.In.SetGameText("");
 
 			if(m_Count == m_ConfigData.EndingCount)
 			{
@@ -192,7 +173,6 @@ public class InGameMgr : SingletonMB<InGameMgr>
 
 	public async UniTask EndGameAsync()
 	{
-		FaceMgr.In.StopDetect();
         await UniTask.WaitForSeconds(2.0f);
 		SceneManager.LoadScene("TitleScene");
 	}

@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/TitleScene.unity
     guid: ba5a2826f5b6144aaa52296b107a59d2
   - enabled: 1
-    path: Assets/Scenes/GameScene 1.unity
+    path: Assets/Scenes/GameScene.unity
     guid: 662bf1397b2374e2893162b710763e69
   - enabled: 1
     path: Assets/OpenCV+Unity/Demo/Lobby/LobbyScene.unity

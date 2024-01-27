@@ -353,11 +353,12 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 46f143af1b5ce8b48aba7b2421ede534, type: 2}
   - {fileID: 2100000, guid: d971d53836cf1574e9d54db66a53c53e, type: 2}
   _renderer: {fileID: 7125529052157858629}
-  _newAudioClips:
+  _manAudioClips:
   - {fileID: 8300000, guid: 6d40e41011f44d84ca2be1fd323f1c97, type: 3}
   - {fileID: 8300000, guid: 68cb215733ca9854182f58313fe19d78, type: 3}
   - {fileID: 8300000, guid: 9dcd170d45fc85c4b983394799e91e8f, type: 3}
   - {fileID: 8300000, guid: a34db1f48253b464f9a6eef615577154, type: 3}
+  _womanAudioClips:
   - {fileID: 8300000, guid: 069878dee862bd94289af650bb2230e2, type: 3}
   - {fileID: 8300000, guid: ad4c12f70191c0b4aa3edc68675ccbbc, type: 3}
   - {fileID: 8300000, guid: 6bcf3946af235f04dabbb59adc4cd994, type: 3}

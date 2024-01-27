@@ -85,8 +85,11 @@ public class UIMgr : SingletonMB<UIMgr>
             }
         });
 
-        m_WebcamTexture.Stop();
-        m_WebcamTexture = null;
+        if (m_WebcamTexture != null)
+        {
+            m_WebcamTexture.Stop();
+            m_WebcamTexture = null;
+        }
 
         SceneManager.LoadScene("TitleScene");
     }

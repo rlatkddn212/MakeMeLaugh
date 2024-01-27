@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     private Transform m_Camera = null;
     [SerializeField]
     private Rigidbody m_Rigidbody = null;
+	[SerializeField]
+	private AudioSource m_AudioSource;
 
 	public float MinYaw = -360;
 	public float MaxYaw = 360;
@@ -109,7 +111,9 @@ public class Player : MonoBehaviour
 
 	public async UniTask DiePlayerAsync()
     {
-		movementController.enabled = false;
+		m_AudioSource.Play();
+
+        movementController.enabled = false;
 		m_Rigidbody.isKinematic = true;
 		m_Tween.Restart();
 

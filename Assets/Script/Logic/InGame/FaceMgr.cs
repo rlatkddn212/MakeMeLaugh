@@ -15,4 +15,9 @@ public class FaceMgr : SingletonMB<FaceMgr>
     protected override void Initialize()
     {
     }
+
+    public void StopDetect()
+    {
+        Destroy(faceDetector.gameObject);
+    }
 }

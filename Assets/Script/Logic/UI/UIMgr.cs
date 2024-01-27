@@ -68,8 +68,6 @@ public class UIMgr : SingletonMB<UIMgr>
 
         await UniTask.WaitForSeconds(5.0f);
 
-        InGameMgr.In.PlayAllSound();
-
         m_FadeScreenUI.gameObject.SetActiveSelf(true);
         m_CamScreenUI.gameObject.SetActiveSelf(false);
         m_FadeScreenUI.color = Color.clear;

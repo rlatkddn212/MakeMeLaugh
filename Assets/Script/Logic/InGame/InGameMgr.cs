@@ -35,8 +35,6 @@ public class InGameMgr : SingletonMB<InGameMgr>
 
 	private CancellationTokenSource m_CancelTokenSource = null;
 
-	public readonly List<AudioClip> m_AudioClipList = new();
-
 	public float PlayerSpeed => m_ConfigData == null ? 10.0f : m_ConfigData.PlayerSpeed;
 	public float PlayerSensitivity => m_ConfigData == null ? 1.0f : m_ConfigData.PlayerSensitivity;
 
@@ -45,8 +43,6 @@ public class InGameMgr : SingletonMB<InGameMgr>
 	protected override void Initialize()
 	{
 		base.Initialize();
-
-		m_AudioClipList.Clear();
 
 		// 출구 제거
         m_ExitLocation.gameObject.SetActive(false);
@@ -113,7 +109,9 @@ public class InGameMgr : SingletonMB<InGameMgr>
 			return;
 		}
 
-		UIMgr.In.SetGameText("날 좀 웃겨봐");
+		var textList = new string[] {"난 진짜 웃음소리가 뭔지 모르겠어..!","정말로 웃어줘 웃음소리가 궁금해.","나에게 진짜 웃음소리를 들려줘","진짜 웃음소리가.. 궁금해" };
+
+		UIMgr.In.SetGameText(textList.GetRndValue());
 
 		m_CancelTokenSource?.Dispose();
 		m_CancelTokenSource = new();
@@ -132,24 +130,6 @@ public class InGameMgr : SingletonMB<InGameMgr>
 		m_MicrophoneRecord.StopRecord();
 
 		Log.InGame.I("End");
-	}
-
-	private void OnGetAudioClip(AudioClip _clip)
-	{
-		// var folderPath = FileTools.PathCombine(FileTools.GetProjectPath(),"Sound");
-
-		// FileTools.CreateFolder(folderPath);
-
-		// var filepathArray = Directory.GetFiles(folderPath);
-		// var musicPath = FileTools.PathCombine(FileTools.GetProjectPath(),string.Format("Sound/laugh_{0}.wav",filepathArray.Length));
-
-		m_AudioClipList.Add(ObjectTools.CopyObject(_clip));
-
-		// musicPath;
-
-		// var data
-
-		// FileTools.WriteAudioClipToWAV(_clip);
 	}
 
 	private async void OnRecordStop(AudioChunk _recorded)
@@ -184,7 +164,9 @@ public class InGameMgr : SingletonMB<InGameMgr>
 		}
 		else
 		{
-			UIMgr.In.SetGameText(result.Result);
+			var textList = new string[] {"넌 나와 똑같군 ","내가 더 잘 웃네 ","시시하군..","웃을줄도 모르는구나 " };
+
+			UIMgr.In.SetGameText(string.Format("-{0}\n-{1}",result.Result,textList.GetRndValue()));
 			// 내가 죽음
 
 			await m_Player.DiePlayerAsync();
@@ -194,14 +176,6 @@ public class InGameMgr : SingletonMB<InGameMgr>
 			await EndGameAsync();
 
         }
-	}
-
-	public void PlayAllSound()
-	{
-		foreach(var clip in new List<AudioClip>(m_AudioClipList))
-		{
-			PlayAudioAndDestroy.Play(clip,transform.position);
-		}
 	}
 
 	public async UniTask EndGameAsync()

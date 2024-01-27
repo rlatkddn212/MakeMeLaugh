@@ -160,9 +160,7 @@ public class InGameMgr : SingletonMB<InGameMgr>
 		var text = result.Result.ToLower();
 
 		// 결과 판단하기
-
-		if(text.Contains("laugh"))
-		if (true)
+		if(text.Contains("laugh") || text.Contains("lol"))
 		{
 			UIMgr.In.SetGameText("");
 
@@ -202,7 +200,7 @@ public class InGameMgr : SingletonMB<InGameMgr>
 	{
 		foreach(var clip in new List<AudioClip>(m_AudioClipList))
 		{
-			PlayAudioAndDestroy.Play(clip,Vector3.zero);
+			PlayAudioAndDestroy.Play(clip,transform.position);
 		}
 	}
 

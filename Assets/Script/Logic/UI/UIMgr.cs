@@ -66,17 +66,12 @@ public class UIMgr : SingletonMB<UIMgr>
         m_CamScreenUI.texture = m_WebcamTexture;
         m_WebcamTexture.Play();
 
-        await UniTask.WaitForSeconds(1.0f);
+        await UniTask.WaitForSeconds(5.0f);
 
         InGameMgr.In.PlayAllSound();
 
-        await UniTask.WaitForSeconds(4.0f);
-
-        // 다음은 너야
-
-        // 소리 넣기
-
         m_FadeScreenUI.gameObject.SetActiveSelf(true);
+        m_CamScreenUI.gameObject.SetActiveSelf(false);
         m_FadeScreenUI.color = Color.clear;
 
         await UniTaskTools.ExecuteOverTimeAsync(0.0f,1.0f,1.0f,(progress)=>

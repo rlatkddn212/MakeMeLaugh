@@ -96,7 +96,7 @@ public class InGameMgr : SingletonMB<InGameMgr>
 
 	private void Update()
 	{
-		if(Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.Y) && Input.GetKeyDown(KeyCode.M))
+		if(Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.C))
 		{
 			UIMgr.In.ToggleOptionPanel();
 		}

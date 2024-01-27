@@ -60,7 +60,12 @@ public class UIMgr : SingletonMB<UIMgr>
         m_FadeScreenUI.gameObject.SetActiveSelf(false);
         m_CamScreenUI.gameObject.SetActiveSelf(true);
 
-        m_WebcamTexture = new WebCamTexture();
+        if(WebCamTexture.devices.IsNullOrEmpty())
+        {
+            return;
+        }
+
+        m_WebcamTexture = new WebCamTexture(WebCamTexture.devices[0].name);
 
         m_CamScreenUI.color = Color.white;
         m_CamScreenUI.texture = m_WebcamTexture;

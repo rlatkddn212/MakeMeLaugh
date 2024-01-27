@@ -151,7 +151,7 @@ public class InGameMgr : SingletonMB<InGameMgr>
 		// 결과 판단하기
 
 		// if((text.Contains('[') || text.Contains('(') || text.Contains('*')) && text.Contains("laugh"))
-		//if(text.Contains("laugh"))
+		// if(text.Contains("laugh"))
 		if (true)
 		{
 			UIMgr.In.SetGameText("으악 주금");
@@ -168,7 +168,6 @@ public class InGameMgr : SingletonMB<InGameMgr>
 				// 탈출 포탈 생성
 				Log.InGame.I("게임 승리");
                 m_ExitLocation.gameObject.SetActive(true);
-                // EndGameAsync();
             }
 			else
 			{
@@ -185,13 +184,16 @@ public class InGameMgr : SingletonMB<InGameMgr>
 			await m_Player.DiePlayerAsync();
 
 			await UIMgr.In.FadeOutAsync();
-		}
+
+			await EndGameAsync();
+
+        }
 	}
 
-	// public async UniTask EndGameAsync()
-	// {
-	// 	await UniTask.WaitForSeconds(2.0f);
-
-	// 	SceneManager.LoadScene("GameScene");
-	// }
+	public async UniTask EndGameAsync()
+	{
+		FaceMgr.In.StopDetect();
+        await UniTask.WaitForSeconds(2.0f);
+		SceneManager.LoadScene("TitleScene");
+	}
 }

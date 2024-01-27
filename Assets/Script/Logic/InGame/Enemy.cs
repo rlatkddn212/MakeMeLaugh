@@ -3,7 +3,6 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using KZLib;
 using UnityEngine;
-using static UnityEngine.ParticleSystem;
 
 public class Enemy : MonoBehaviour
 {

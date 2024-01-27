@@ -1,13 +1,7 @@
 ﻿namespace OpenCvSharp.Demo
 {
-	using System;
 	using UnityEngine;
 	using System.Collections.Generic;
-	using UnityEngine.UI;
-    using OpenCvSharp;
-    using System.Drawing;
-    using NPOI.SS.UserModel;
-    using NPOI.SS.Formula.Functions;
 
     public class FaceDetectorScene : WebCamera
     {
@@ -18,23 +12,11 @@
 
 		private FaceProcessorLive<WebCamTexture> processor;
 
-		public List<GameObject> points;
-
 		/// <summary>
 		/// Default initializer for MonoBehavior sub-classes
 		/// </summary>
 		protected override void Awake()
 		{
-			points = new List<GameObject>();
-
-			for (int i = 0; i < 69; i++)
-			{
-				GameObject point = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                point.transform.localScale = new Vector3(10f, 10f, 10f);
-
-				points.Add(point);
-            }
-
             base.Awake();
 			base.forceFrontalCamera = true; // we work with frontal cams here, let's force it for macOS s MacBook doesn't state frontal cam correctly
 
@@ -123,14 +105,11 @@
 
             texture.Apply();
             _renderer.material.mainTexture = texture;
-            // Apply the texture to a material or any other object you want to use it with
-            // GetComponent<Renderer>().material.mainTexture = texture;
         }
 
         void SetPoints(Texture2D texture, int x, int y)
         {
 			int pointSize = 4;
-
             for (int i = -pointSize / 2; i <= pointSize / 2; i++)
             {
                 for (int j = -pointSize / 2; j <= pointSize / 2; j++)
@@ -145,7 +124,5 @@
                 }
             }
         }
-
-
     }
 }

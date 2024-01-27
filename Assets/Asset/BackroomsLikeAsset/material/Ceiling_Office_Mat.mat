@@ -8,10 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Ceiling_Office_Mat
-  m_Shader: {fileID: -6465566751694194690, guid: bbedfa6c7ca379747862390237251092,
-    type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
+  m_Shader: {fileID: -6465566751694194690, guid: bbedfa6c7ca379747862390237251092, type: 3}
   m_ValidKeywords:
   - _ALPHATEST_ON
   m_InvalidKeywords: []
@@ -22,7 +19,6 @@ Material:
   stringTagMap:
     RenderType: TransparentCutout
   disabledShaderPasses: []
-  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -86,7 +82,7 @@ Material:
     m_Colors:
     - _Blue_Area_Color: {r: 1, g: 1, b: 1, a: 0}
     - _ColorOverlay: {r: 1, g: 1, b: 1, a: 0}
-    - _Emission_Color: {r: 9.082412, g: 9.082412, b: 9.082412, a: 0}
+    - _Emission_Color: {r: 0.050173707, g: 0.050173707, b: 0.050173707, a: 0}
     - _Green_Area_Color: {r: 0, g: 1, b: 0.13624477, a: 0}
     - _Red_Area_Color: {r: 1, g: 1, b: 1, a: 0}
     - _UV_Tiling: {r: 1, g: 1, b: 0, a: 0}

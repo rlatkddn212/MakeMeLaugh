@@ -146,7 +146,8 @@ public class InGameMgr : SingletonMB<InGameMgr>
 		// 결과 판단하기
 
 		// if((text.Contains('[') || text.Contains('(') || text.Contains('*')) && text.Contains("laugh"))
-		if(text.Contains("laugh"))
+		//if(text.Contains("laugh"))
+		if (true)
 		{
 			UIMgr.In.SetGameText("으악 주금");
 

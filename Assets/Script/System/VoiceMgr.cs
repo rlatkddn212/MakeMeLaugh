@@ -29,8 +29,7 @@ public class VoiceMgr : SingletonMB<VoiceMgr>
 
 	private async UniTask InitModelAsync()
 	{
-		var modelPath = FileTools.PathCombine(FileTools.GetProjectPath(),"Whisper/ggml-tiny.bin");
-
+        var modelPath = FileTools.PathCombine(Application.dataPath,"Whisper/ggml-tiny.bin");
 		Log.System.I(modelPath);
 
 		m_WhisperWrapper = await WhisperWrapper.InitFromFileAsync(modelPath);

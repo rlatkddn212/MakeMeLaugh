@@ -1,4 +1,3 @@
-#if UNITY_EDITOR
 using System;
 using System.IO;
 using System.Text;
@@ -109,4 +108,3 @@ public static partial class FileTools
 		_stream.Write(BitConverter.GetBytes(clip.samples*clip.channels*2),0,4);
 	}
 }
-#endif

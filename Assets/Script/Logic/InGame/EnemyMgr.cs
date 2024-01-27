@@ -10,6 +10,7 @@ public class EnemyMgr : SingletonMB<EnemyMgr>
 
 	[SerializeField]
 	private Enemy m_Pivot = null;
+
 	[SerializeField]
 	private Transform m_Storage = null;
 
@@ -24,9 +25,9 @@ public class EnemyMgr : SingletonMB<EnemyMgr>
 	{
 		base.Initialize();
 
-		m_ObjectPool = new GameObjectPool(m_Pivot.gameObject,m_Storage,5);
+        m_ObjectPool = new GameObjectPool(m_Pivot.gameObject, m_Storage, 5);
 
-		m_PositionList.Randomize();
+        m_PositionList.Randomize();
 	}
 
 	public async UniTask KillEnemyAsync()
@@ -36,14 +37,15 @@ public class EnemyMgr : SingletonMB<EnemyMgr>
 			await m_NowEnemy.DestroyEffectAsync();
 
 			m_ObjectPool.Put(m_NowEnemy.gameObject);
-		}
+
+        }
 	}
 
 	public void SpawnEnemy()
 	{
 		var dataList = new List<Transform>(m_PositionList);
-
-		if(m_index.HasValue)
+        
+        if (m_index.HasValue)
 		{
 			dataList.RemoveAt(m_index.Value);
 		}
@@ -51,7 +53,8 @@ public class EnemyMgr : SingletonMB<EnemyMgr>
 		var data = dataList.GetRndValue();
 
 		m_NowEnemy = m_ObjectPool.Get<Enemy>(transform);
-		m_NowEnemy.Initialize(data.position);
+        Debug.Log("적군 생성");
+        m_NowEnemy.Initialize(data.position);
 
 		m_index = dataList.IndexOf(data);
 	}

@@ -3,13 +3,6 @@ using UnityEngine;
 using System.Collections;
 using System;
 
-#if !UNITY_EDITOR
-
-using Cysharp.Threading.Tasks;
-using KZLib.KZDevelop;
-
-#endif
-
 namespace KZLib
 {
 	public class LogMgr : Singleton<LogMgr>
@@ -20,11 +13,6 @@ namespace KZLib
 
 		public IReadOnlyCollection<LogData> LogDataCollection => m_LogDataQueue;
 
-#if !UNITY_EDITOR
-		private const int COOL_TIME_TIMER = 30*1000; // 30초
-
-		private bool m_SendLock = false;
-#endif
 		private Action<LogData> m_OnAddLog = null;
 
 		public event Action<LogData> OnAddLog
@@ -79,13 +67,6 @@ namespace KZLib
 
 			AddLogData(_type,result);
 
-#if !UNITY_EDITOR
-			if(!m_SendLock && (_type == LogType.Exception))
-			{
-				SendBugReportAsync().Forget();
-			}
-#endif
-
 			return result;
 		}
 
@@ -131,23 +112,6 @@ namespace KZLib
 
 			m_OnAddLog?.Invoke(data);
 		}
-
-#if !UNITY_EDITOR
-		private async UniTaskVoid SendBugReportAsync()
-		{
-			m_SendLock = true;
-
-			await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
-
-			var texture = ObjectTools.GetScreenShot();
-
-			await NetworkReport.SendBugReportAsync(texture.EncodeToPNG());
-
-			await UniTask.WaitForSeconds(COOL_TIME_TIMER);
-
-			m_SendLock = false;
-		}
-#endif
 
 		public void ClearLogData()
 		{

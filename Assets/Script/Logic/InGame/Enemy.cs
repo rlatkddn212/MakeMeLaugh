@@ -12,6 +12,9 @@ public class Enemy : MonoBehaviour
 	[SerializeField]
 	private Renderer _renderer;
 
+	[SerializeField]
+	private List<AudioClip> _newAudioClips;
+
     [SerializeField]
 	private AudioSource m_AudioSource = null;
 	private float m_SoundInterval = 3.0f;
@@ -44,6 +47,10 @@ public class Enemy : MonoBehaviour
             // 머터리얼 교체
             _renderer.material = material;
         }
+
+		// 랜덤으로 목소리 가져오기
+		AudioClip audioClip = _newAudioClips.GetRndValue();
+        m_AudioSource.clip = audioClip;
 
         rb.velocity = Vector3.zero;
 		transform.DOKill();

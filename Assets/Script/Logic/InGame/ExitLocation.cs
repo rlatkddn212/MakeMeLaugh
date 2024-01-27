@@ -13,6 +13,8 @@ public class ExitLocation : MonoBehaviour
         {
             Debug.Log("Exit"); 
 
+
+
             UIMgr.In.PlayWebCamAsync().Forget();
             
         }

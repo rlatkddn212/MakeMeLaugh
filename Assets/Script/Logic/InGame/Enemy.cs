@@ -13,7 +13,11 @@ public class Enemy : MonoBehaviour
 	private Renderer _renderer;
 
 	[SerializeField]
-	private List<AudioClip> _newAudioClips;
+    private List<AudioClip> _manAudioClips;
+    [SerializeField]
+    private List<AudioClip> _womanAudioClips;
+
+	private bool m_IsMan = true;
 
     [SerializeField]
 	private AudioSource m_AudioSource = null;
@@ -48,10 +52,8 @@ public class Enemy : MonoBehaviour
             _renderer.material = material;
         }
 
-		// 랜덤으로 목소리 가져오기
-		AudioClip audioClip = _newAudioClips.GetRndValue();
-        m_AudioSource.clip = audioClip;
-
+        // 랜덤으로 목소리 가져오기
+        m_IsMan = Random.Range(0, 2) == 0;
         rb.velocity = Vector3.zero;
 		transform.DOKill();
 
@@ -69,7 +71,16 @@ public class Enemy : MonoBehaviour
 	{
 		while(!m_CancelTokenSource.IsCancellationRequested)
 		{
-			m_AudioSource.Play();
+			if (m_IsMan)
+			{
+                m_AudioSource.clip = _manAudioClips.GetRndValue();
+            }
+			else
+			{
+				m_AudioSource.clip = _womanAudioClips.GetRndValue();
+			}
+
+            m_AudioSource.Play();
 
 			await UniTask.WaitForSeconds(m_SoundInterval);
 		}
